@@ -67,7 +67,7 @@ PUBLIC FUNCTIONS
 direction_t execute_defender_strategy 
         (position_t defender_position, Spy attacker_spy) {
 
-    srand(time(NULL));
+    
     
     // TODO: unused parameters, remove these lines later
     UNUSED(attacker_spy);
@@ -81,7 +81,7 @@ direction_t execute_defender_strategy
     direction_t direction;
 
     // caso contrario, primeiramente tenta descer, senão tenta ir para alguma outra direção
-    for (int i = 0; i < LENGTH-1; i++)
+    for (int i = 0; i < LENGTH; i++)
     {
         direction = (direction_t) {DIRECTIONS_DEFENDER[i][0], DIRECTIONS_DEFENDER[i][1]};
 
@@ -92,7 +92,7 @@ direction_t execute_defender_strategy
         }
     }
 
-    direction = (direction_t) {DIRECTIONS_DEFENDER[LENGTH-1][0], DIRECTIONS_DEFENDER[LENGTH-1][1]};
+    direction = (direction_t) DIR_STAY;
 
     return direction;
 }
