@@ -1,5 +1,7 @@
 // Standard headers
 #include <stdio.h>
+#include <time.h>
+#include <stdlib.h>
 
 // Internal headers
 #include "../include/direction.h"
@@ -26,17 +28,32 @@ PRIVATE FUNCTIONS
 */
 /*----------------------------------------------------------------------------*/
 
-bool moved_atack(position_t center, direction_t direction)
+/* sorteia, com pesos, a direção que o atacante ira retornar
+*/
+direction_t chose_direction()
 {
-    position_t new_position = move_position(center, direction);
+    int num = rand()%100;
 
-    // caso o defender se movimentou, retorna a direção para 'cima'
-    if (!equal_positions(center, new_position))
-    {
-        return true;
-    }
+    direction_t direction;
 
-    return false;
+    if (num < 30)
+        direction = (direction_t) {DIRECTIONS_ATTACKER[0][0], DIRECTIONS_ATTACKER[0][1]};
+    else if (num < 60)
+        direction = (direction_t) {DIRECTIONS_ATTACKER[1][0], DIRECTIONS_ATTACKER[1][1]};
+    else if (num < 90)
+        direction = (direction_t) {DIRECTIONS_ATTACKER[2][0], DIRECTIONS_ATTACKER[2][1]};
+    else if (num < 92)
+        direction = (direction_t) {DIRECTIONS_ATTACKER[3][0], DIRECTIONS_ATTACKER[3][1]};
+    else if (num < 94)
+        direction = (direction_t) {DIRECTIONS_ATTACKER[4][0], DIRECTIONS_ATTACKER[4][1]};
+    else if (num < 96)
+        direction = (direction_t) {DIRECTIONS_ATTACKER[5][0], DIRECTIONS_ATTACKER[5][1]};
+    else if (num < 98)
+        direction = (direction_t) {DIRECTIONS_ATTACKER[6][0], DIRECTIONS_ATTACKER[6][1]};
+    else
+        direction = (direction_t) {DIRECTIONS_ATTACKER[7][0], DIRECTIONS_ATTACKER[7][1]};
+    
+    return direction;
 }
 
 /*----------------------------------------------------------------------------*/
@@ -50,21 +67,11 @@ direction_t execute_attacker_strategy
 
     // TODO: unused parameters, remove these lines later
     UNUSED(defender_spy);
+    UNUSED(attacker_position);
 
     direction_t direction;
 
-    for (int i = 0; i < LENGTH-1; i++)
-    {
-        direction = (direction_t) {DIRECTIONS_ATTACKER[i][0], DIRECTIONS_ATTACKER[i][1]};
-
-        // Caso haja movimentação do attacker retorna a direção
-        if (moved_atack(attacker_position, direction))
-        {
-            return direction;
-        }
-    }
-
-    direction = (direction_t) {DIRECTIONS_ATTACKER[LENGTH-1][0], DIRECTIONS_ATTACKER[LENGTH-1][1]};
+    direction = chose_direction();
 
     return direction;
 }
